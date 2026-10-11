@@ -179,9 +179,9 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
 footer a{color:#C9D3E0}
 
 /* mobile sticky call bar */
-.callbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s}
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s}
 .callbar.on{transform:none}
-.callbar .btn{min-height:50px;font-size:15px}
+.callbar .btn{min-height:50px;font-size:14px;padding:0 6px;white-space:nowrap}
 @media(min-width:760px){.callbar{display:none}}
 @media(max-width:759px){body{padding-bottom:76px}}
 </style>
@@ -215,6 +215,7 @@ footer a{color:#C9D3E0}
 <div class="cta">
 <a class="btn navy" href="tel:09026979671"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>電話で相談する</a>
 <a class="btn gold" href="https://line.me/R/ti/p/~breakmeintolittle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20l1.3-3.9A9 8 0 1 1 7.7 19L3 20"/></svg>LINEで相談する</a>
+<a class="btn line" href="mailto:tomotomo.web@gmail.com?subject=%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>メールで相談する</a>
 </div>
 <p class="sub-cta">名刺のQRコードから来られた方は <a href="honma-kazuya.vcf" download>こちらから連絡先を保存</a> できます。</p>
 </div>
@@ -353,7 +354,7 @@ footer a{color:#C9D3E0}
 <div class="c-grid">
 <a class="c-item" href="tel:09026979671"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span><span class="lbl">お電話</span><span class="val">090-2697-9671</span></span></a>
 <a class="c-item" href="https://line.me/R/ti/p/~breakmeintolittle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20l1.3-3.9A9 8 0 1 1 7.7 19L3 20"/></svg><span><span class="lbl">LINE ID</span><span class="val">breakmeintolittle</span></span></a>
-<a class="c-item" href="mailto:tomotomo.web@gmail.com"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><span class="lbl">メール</span><span class="val">tomotomo.web@gmail.com</span></span></a>
+<a class="c-item" href="mailto:tomotomo.web@gmail.com?subject=%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><span class="lbl">メール</span><span class="val">tomotomo.web@gmail.com</span></span></a>
 <a class="c-item save" href="honma-kazuya.vcf" download><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 1 0-8 0M6 21v-2a4 4 0 0 1 4-4h4M16 19h6M19 16v6"/></svg><span><span class="lbl">スマホの連絡先に</span><span class="val">連絡先を保存する</span></span></a>
 </div>
 <div class="profile"><span>屋号：<b>伴 TOMO Web</b></span><span>代表：<b>本間 一也</b>（ほんま かずや）</span><span>対応エリア：<b>札幌及び近郊</b></span></div>
@@ -368,6 +369,7 @@ footer a{color:#C9D3E0}
 <div class="callbar" id="callbar" aria-label="すぐに相談する">
 <a class="btn navy" href="tel:09026979671">電話で相談</a>
 <a class="btn gold" href="https://line.me/R/ti/p/~breakmeintolittle">LINEで相談</a>
+<a class="btn line" href="mailto:tomotomo.web@gmail.com?subject=%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87" style="background:var(--card)">メールで相談</a>
 </div>
 
 <script>

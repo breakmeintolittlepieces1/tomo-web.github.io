@@ -98,6 +98,13 @@ section.news{padding:0 0 56px}
 .story{display:grid;gap:36px;align-items:center}
 @media(min-width:860px){.story{grid-template-columns:420px 1fr;gap:56px}}
 .story-mark{width:100%;max-width:420px;margin:0 auto}
+.greet{margin-top:56px;padding:32px;background:var(--card);border:1px solid var(--line);border-radius:20px;display:grid;grid-template-columns:200px 1fr;gap:32px;align-items:center}
+.greet img{width:200px;height:200px;border-radius:50%;object-fit:cover;border:4px solid var(--gold);background:#fff}
+.greet p{margin:0 0 12px;color:var(--soft-ink);line-height:1.9}
+.greet .greet-label{font-family:"Noto Serif JP",serif;font-weight:700;color:var(--head);font-size:22px;margin-bottom:14px;letter-spacing:.04em}
+.greet .greet-sign{margin:18px 0 0;font-size:14px;color:var(--mute);text-align:right}
+.greet .greet-sign b{display:inline-block;margin-left:12px;font-family:"Noto Serif JP",serif;font-size:20px;color:var(--head);letter-spacing:.1em}
+@media(max-width:679px){.greet{grid-template-columns:1fr;gap:20px;padding:28px 20px;text-align:left}.greet img{width:150px;height:150px;margin:0 auto}.greet .greet-label{text-align:center}}
 .story-mark text{font-family:"Noto Sans JP",sans-serif;font-weight:700;font-size:15px}
 .promises{display:grid;gap:18px;margin:8px 0 0;padding:0;list-style:none}
 .promises li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
@@ -266,6 +273,18 @@ footer a{color:#C9D3E0}
 <li><span class="dot" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h7"/></svg></span><div><b>専門用語を使いません</b><span>「ドメイン」も「サーバー」も、分かる言葉で説明します。難しい手続きはこちらで。</span></div></li>
 <li><span class="dot" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8M20 4v4h-4M20 12a8 8 0 0 1-13.7 5.7L4 16M4 20v-4h4"/></svg></span><div><b>作って終わりにしません</b><span>料金や営業時間の変更、写真の差し替え。公開後の更新も代わりに行います。</span></div></li>
 </ul>
+</div>
+</div>
+<div class="wrap">
+<div class="greet" id="greeting" aria-labelledby="greet-h">
+<img src="honma.jpeg" alt="代表 本間一也の似顔絵" width="240" height="240" loading="lazy">
+<div>
+<p class="greet-label" id="greet-h">代表あいさつ</p>
+<p>はじめまして。伴 TOMO Web 代表の本間一也です。</p>
+<p>屋号の「伴」は「伴走」の「伴」。ホームページを作って終わりではなく、公開後の更新や相談まで、最後まで隣で一緒に走ります。</p>
+<p>腕も評判もいいのに、ホームページがまだのお店へ。パソコンが苦手でも大丈夫です。わかる言葉で、ていねいにお手伝いします。</p>
+<p class="greet-sign">伴 TOMO Web 代表<b>本間 一也</b></p>
+</div>
 </div>
 </div>
 </section>

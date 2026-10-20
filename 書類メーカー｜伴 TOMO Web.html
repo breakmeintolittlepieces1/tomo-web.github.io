@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>書類メーカー｜伴 TOMO Web</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@700&display=swap">
+<style>
+:root{--navy:#1F3A5F;--navy2:#2C4E7A;--gold:#E8A33D;--over:#C46A2B;--bg:#F3EFE8;--card:#FFFFFF;--line:#E2DACB;--ink:#1F2A36;--mute:#6B5E48;--soft:#F7F4EE;--danger:#B3261E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181F;--card:#1D232C;--line:#33404F;--ink:#E8E4DC;--mute:#B5AC9C;--soft:#232B36}}
+:root[data-theme="dark"]{--bg:#14181F;--card:#1D232C;--line:#33404F;--ink:#E8E4DC;--mute:#B5AC9C;--soft:#232B36}
+input,select,textarea,button{background:var(--card)!important;color:var(--ink)}
+button.primary{background:var(--navy)!important;color:#fff}button.gold{background:var(--gold)!important;color:#1F2A36}
+.seg{background:var(--soft)}.seg button[aria-pressed="true"]{background:var(--card)!important}
+.doc,.doc *{color-scheme:light}
+.card h2,details.card summary{color:var(--ink)}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-size:15px;-webkit-text-size-adjust:100%}
+header.top{background:var(--navy);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px}
+header.top b{font-family:"Noto Serif JP",serif;font-size:20px}
+header.top span{font-size:13px;color:#C9D3E0}
+.wrap{max-width:1280px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:1000px){.wrap{grid-template-columns:minmax(0,440px) minmax(0,1fr);align-items:start}.previewcol{position:sticky;top:16px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.card h2{margin:0 0 12px;font-size:16px;color:var(--navy);display:flex;align-items:center;gap:8px}
+details.card summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:28px}
+details.card summary::after{content:"開く";font-size:12px;color:var(--mute);font-weight:400}
+details.card[open] summary::after{content:"閉じる"}
+details.card[open] summary{margin-bottom:12px}
+label{display:block;font-size:12px;color:var(--mute);margin:10px 0 4px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+textarea{min-height:76px;resize:vertical;line-height:1.6}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid rgba(232,163,61,.55);outline-offset:1px;border-color:var(--gold)}
+.row{display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.row3{display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--navy);padding:10px 14px;min-height:44px;font-weight:500}
+button.primary{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:700}
+button.gold{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}
+button.ghost{border-color:transparent;background:transparent;color:var(--mute);min-height:36px;padding:6px 8px}
+button:disabled{opacity:.5;cursor:default}
+.item{border:1px solid var(--line);border-radius:12px;padding:10px 12px 12px;margin-bottom:10px;background:var(--soft)}
+.item .head{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mute)}
+.item .amt{font-weight:700;color:var(--navy);font-size:14px}
+.totals{display:grid;gap:4px;margin-top:8px;font-size:14px}
+.totals div{display:flex;justify-content:space-between}
+.totals .grand{font-size:17px;font-weight:700;color:var(--navy);border-top:1px solid var(--line);padding-top:6px;margin-top:4px}
+.toggle{display:flex;align-items:center;gap:10px;font-size:14px;margin:6px 0}
+.toggle input{width:22px;height:22px;flex:none}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;background:#E9E3D8;padding:4px;border-radius:12px;margin-bottom:12px}
+.seg button{border:none;background:transparent;min-height:40px}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--navy);font-weight:700;box-shadow:0 1px 3px rgba(31,58,95,.15)}
+.actions{display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:12px}
+.actions .full{grid-column:1/-1}
+.stage{background:#D9D2C4;border-radius:14px;padding:12px;overflow:hidden}
+.scaler{transform-origin:top left}
+.msg{font-size:13px;color:var(--mute);min-height:20px;margin:0 0 8px}
+.msg.err{color:var(--danger)}
+.hist{display:grid;gap:6px}
+.hist button{text-align:left;display:flex;justify-content:space-between;gap:8px;font-weight:400}
+.hist small{color:var(--mute)}
+.hint{font-size:12px;color:var(--mute);margin:6px 0 0;line-height:1.6}
+/* ===== document (A4 794x1123) ===== */
+.doc{width:794px;height:1123px;background:#fff;color:#222;padding:52px 56px;font-family:"Noto Sans JP","Hiragino Sans",sans-serif;font-size:11.5px;line-height:1.55;position:relative;overflow:hidden}
+.doc .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.doc .title{font-family:"Noto Serif JP",serif;font-size:30px;font-weight:700;color:var(--navy);letter-spacing:.35em;border-bottom:3px solid var(--navy);padding-bottom:6px;display:inline-block}
+.doc .meta{text-align:right;color:#444;font-size:11px}
+.doc .client{margin-top:26px;font-size:18px;font-weight:700;border-bottom:1.5px solid #333;display:inline-block;padding-bottom:3px;min-width:260px}
+.doc .greet{margin-top:10px;color:#444;font-size:11px;max-width:380px}
+.doc .issuer{text-align:right;font-size:10.5px;color:#333;line-height:1.6}
+.doc .issuer .brand{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin:10px 0 6px}
+.doc .issuer .brand b{font-size:15px;color:var(--navy)}
+.doc .issuer .brand .k{font-family:"Noto Serif JP",serif;font-size:20px;color:var(--navy)}
+.doc .subject{margin:20px 0 10px;font-weight:700;font-size:12.5px}
+.doc .sum{display:flex;justify-content:space-between;align-items:center;background:#F1F4F8;border:1px solid #DCE3EC;border-left:5px solid var(--navy);border-radius:4px;padding:12px 18px;gap:16px}
+.doc .sum .lbl{font-size:11px;color:#444;font-weight:700}
+.doc .sum .big{font-size:24px;font-weight:700;color:var(--navy)}
+.doc .sum .right{text-align:right}
+.doc .sum .right .lbl{color:#B3261E}
+.doc .sum .right .val{font-size:15px;font-weight:700}
+.doc .stamp{width:70px;height:70px;border:1.5px dashed #999;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;text-align:center;line-height:1.3}
+.doc .bar{margin-top:16px;background:var(--navy);color:#fff;font-weight:700;font-size:11.5px;padding:6px 10px;border-radius:3px 3px 0 0}
+.doc .bar.gray{background:#5B6470}
+.doc table{width:100%;border-collapse:collapse;font-size:11px}
+.doc th{background:#E8EEF6;border:1px solid #C9D3E0;padding:5px 6px;font-weight:700}
+.doc td{border:1px solid #D6DCE4;padding:6px 8px;vertical-align:middle}
+.doc td.c{text-align:center;width:46px}
+.doc td.r{text-align:right;width:92px;white-space:nowrap}
+.doc td .nm{font-weight:700}
+.doc td .ds{font-size:9.8px;color:#666}
+.doc tr.sub td{background:#FAFAFA;font-weight:700;text-align:right}
+.doc tr.disc td{background:#FFF3F2;color:#B3261E;font-weight:700;text-align:right}
+.doc tr.grand td{background:#E8EEF6;color:var(--navy);font-weight:700;text-align:right;font-size:12px}
+.doc tr.tax td{text-align:right;color:#555;font-size:10.5px}
+.doc .boxes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.doc .box{border:1px solid #D6DCE4;border-radius:5px;padding:10px 12px;background:#FAFBFC;font-size:10.5px;line-height:1.7}
+.doc .box h4{margin:0 0 6px;color:var(--navy);font-size:11px;border-bottom:1px dashed #C9D3E0;padding-bottom:4px}
+.doc .box .pre{white-space:pre-wrap}
+.offscreen{position:fixed;left:-10000px;top:0}
+</style>
+</head>
+<body>
+<header class="top">
+<svg width="48" height="32" viewBox="0 0 120 80" aria-hidden="true"><circle cx="44" cy="40" r="36" fill="#fff"/><circle cx="76" cy="40" r="36" fill="#E8A33D"/><path d="M60 7.75A36 36 0 0 1 60 72.25A36 36 0 0 1 60 7.75Z" fill="#F6C979"/></svg>
+<div><b>書類メーカー</b><br><span>見積書・請求書・領収書を一括作成</span></div>
+</header>
+<div class="wrap">
+<div class="formcol">
+<details class="card" id="issuerCard">
+<summary>発行者情報（自分の情報）</summary>
+<div class="row"><div><label for="iName">屋号</label><input id="iName" data-k="issuer.name"></div><div><label for="iRep">代表者名</label><input id="iRep" data-k="issuer.rep"></div></div>
+<label for="iAddr">住所</label><input id="iAddr" data-k="issuer.addr" placeholder="〒000-0000 北海道札幌市…">
+<div class="row"><div><label for="iTel">電話</label><input id="iTel" data-k="issuer.tel" inputmode="tel"></div><div><label for="iMail">メール</label><input id="iMail" data-k="issuer.mail" inputmode="email"></div></div>
+<div class="row"><div><label for="iWeb">Web</label><input id="iWeb" data-k="issuer.web"></div><div><label for="iReg">適格請求書の登録番号</label><input id="iReg" data-k="issuer.reg" placeholder="未登録なら空欄"></div></div>
+<label for="iBank">振込先（金融機関・口座番号・名義）</label><textarea id="iBank" data-k="issuer.bank" placeholder="金融機関：○○銀行 ○○支店&#10;口座：普通 0000000&#10;名義：ホンマ カズヤ"></textarea>
+<p class="hint">ここは一度入力すれば次回も残ります。</p>
+</details>
+
+<div class="card">
+<h2>お客様・件名</h2>
+<div class="row"><div><label for="cName">お客様名</label><input id="cName" data-k="client.name" placeholder="例：〇〇工務店"></div><div><label for="cHon">敬称</label><select id="cHon" data-k="client.hon"><option>様</option><option>御中</option></select></div></div>
+<label for="subj">件名（領収書の但し書きにも使います）</label><input id="subj" data-k="subject" placeholder="例：ホームページ制作費（初期費用）">
+</div>
+
+<div class="card">
+<h2>明細（税込）</h2>
+<div id="items"></div>
+<div class="row"><button type="button" id="addItem">＋ 行を追加</button>
+<select id="preset" aria-label="よく使う項目から追加"><option value="">よく使う項目から追加</option></select></div>
+<div class="row" style="margin-top:6px"><div><label for="dLabel">割引の名称</label><input id="dLabel" data-k="discount.label"></div><div><label for="dAmt">割引額（円）</label><input id="dAmt" data-k="discount.amount" inputmode="numeric"></div></div>
+<div class="totals" id="totals"></div>
+</div>
+
+<details class="card" id="monthlyCard">
+<summary>月額費用（見積書に記載・任意）</summary>
+<div class="toggle"><input type="checkbox" id="mOn" data-k="monthly.on"><label for="mOn" style="margin:0;font-size:14px;color:var(--ink)">見積書に月額費用を載せる</label></div>
+<div id="mItems"></div>
+<button type="button" id="addM">＋ 月額の行を追加</button>
+</details>
+
+<div class="card">
+<h2>番号・日付</h2>
+<label for="no">書類番号（共通部分）</label><input id="no" data-k="no">
+<p class="hint" id="noHint"></p>
+<div class="row"><div><label for="dEst">見積書の発行日</label><input type="date" id="dEst" data-k="dates.est"></div><div><label for="dValid">見積の有効期限</label><input type="date" id="dValid" data-k="dates.valid"></div></div>
+<div class="row"><div><label for="dInv">請求書の発行日</label><input type="date" id="dInv" data-k="dates.inv"></div><div><label for="dDue">お支払期限</label><input type="date" id="dDue" data-k="dates.due"></div></div>
+<div class="row"><div><label for="dRec">領収日（入金日）</label><input type="date" id="dRec" data-k="dates.rec"></div><div><label for="pay">お支払方法</label><select id="pay" data-k="pay"><option>銀行振込</option><option>現金</option><option>その他</option></select></div></div>
+</div>
+
+<details class="card">
+<summary>備考欄の文章</summary>
+<label for="nEst">見積書の備考</label><textarea id="nEst" data-k="notes.est"></textarea>
+<label for="nInv">請求書の備考</label><textarea id="nInv" data-k="notes.inv"></textarea>
+<label for="nRec">領収書の備考</label><textarea id="nRec" data-k="notes.rec"></textarea>
+</details>
+
+<details class="card" id="histCard">
+<summary>保存した書類</summary>
+<div class="hist" id="hist"><p class="hint">まだ保存した書類はありません。</p></div>
+</details>
+</div>
+
+<div class="previewcol">
+<div class="seg" role="group" aria-label="プレビューする書類">
+<button type="button" data-doc="est" aria-pressed="true">見積書</button>
+<button type="button" data-doc="inv" aria-pressed="false">請求書</button>
+<button type="button" data-doc="rec" aria-pressed="false">領収書</button>
+</div>
+<div class="actions">
+<button type="button" class="primary" id="pdfOne">この書類をPDF保存</button>
+<button type="button" class="gold" id="pdfAll">3点まとめてPDF保存</button>
+<button type="button" id="saveBtn">内容を保存</button>
+<button type="button" id="newBtn">新規作成</button>
+</div>
+<p class="msg" id="msg" role="status" aria-live="polite"></p>
+<div class="stage" id="stage"><div class="scaler" id="scaler"></div></div>
+</div>
+</div>
+<div class="offscreen" id="off" aria-hidden="true"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const PRESETS=[
+["トップページ Webオリジナルデザイン・コーディング","レスポンシブ・スマホ最適化・お問い合わせ導線",50000],
+["コンテンツ構築・画像修正加工","サービス案内・アクセス・Googleマップ埋め込み",20000],
+["独自ドメイン設定・GitHub Pages 環境構築","DNS設定・公開設定",15000],
+["Googleビジネスプロフィール連携・設定","",10000],
+["対面サポート・現地訪問作業費","アカウント確認・素材回収・操作レクチャー",5000],
+["名刺作成","デザイン込み・100部",3000]];
+const MPRESETS=[["Webサイト維持管理・表示トラブル対応","独自ドメイン更新代行含む",1500],["テキスト・画像の軽微な修正代行（月1〜2回）","",1000],["Googleビジネスプロフィール更新代行・簡易相談","",500]];
+function jstToday(){const d=new Date(Date.now()+9*3600e3);return d.toISOString().slice(0,10)}
+function addDays(s,n){const d=new Date(s+"T00:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+function endOfNextMonth(s){const d=new Date(s+"T00:00:00Z");const e=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+2,0));return e.toISOString().slice(0,10)}
+function defaultIssuer(){return{name:"伴 TOMO Web",rep:"本間 一也",addr:"",tel:"090-2697-9671",mail:"tomotomo.web@gmail.com",web:"tomo-web.github.io",reg:"",bank:""}}
+function freshDraft(prevNo){const t=jstToday();return{
+client:{name:"",hon:"様"},subject:"ホームページ制作費（初期費用）",
+items:[{name:"",desc:"",qty:1,unit:"式",price:0}],
+discount:{label:"初回モニター特別割引（実績掲載・感想ご協力特典）",amount:0},
+monthly:{on:false,items:MPRESETS.map(p=>({name:p[0],desc:p[1],qty:1,unit:"月",price:p[2]}))},
+no:nextNo(prevNo,t),dates:{est:t,valid:addDays(t,30),inv:t,due:endOfNextMonth(t),rec:t},pay:"銀行振込",
+notes:{est:"・本お見積りの有効期限は上記の期日までです。\n・月額費用は任意のオプション契約です。ご自身で更新・管理される場合は発生しません。",inv:"・お振込手数料は貴社にてご負担をお願いいたします。\n・内容にご不明点があればお気軽にご連絡ください。",rec:"・上記金額を確かに領収いたしました。"}}}
+function nextNo(prev,t){const ym=t.slice(0,7).replace("-","");if(prev&&/^\d{8}$/.test(prev)&&prev.slice(0,6)===ym){return ym+String(Math.min(99,+prev.slice(6)+1)).padStart(2,"0")}return ym+"01"}
+let S={issuer:defaultIssuer(),draft:freshDraft(""),history:[]};
+let current="est";
+const yen=n=>"￥"+Math.round(n||0).toLocaleString("ja-JP");
+const num=v=>{const n=parseFloat(String(v??"").replace(/[^\d.\-]/g,""));return isFinite(n)?n:0};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const jdate=s=>{if(!s)return"";const[y,m,d]=s.split("-");return`${+y}年${+m}月${+d}日`};
+function calc(D){const sub=D.items.reduce((a,i)=>a+num(i.qty)*num(i.price),0);const disc=Math.min(sub,Math.max(0,num(D.discount.amount)));const total=sub-disc;const tax=Math.floor(total*10/110);const mtotal=D.monthly.items.reduce((a,i)=>a+num(i.qty)*num(i.price),0);return{sub,disc,total,tax,mtotal}}
+function get(path){return path.split(".").reduce((o,k)=>o?.[k],path.startsWith("issuer.")?{issuer:S.issuer}:S.draft)}
+function set(path,v){if(path.startsWith("issuer.")){S.issuer[path.slice(7)]=v;queueSave("issuer");return}const ks=path.split(".");let o=S.draft;for(let i=0;i<ks.length-1;i++)o=o[ks[i]];o[ks[ks.length-1]]=v;queueSave("draft")}
+function bindFields(){document.querySelectorAll("[data-k]").forEach(el=>{const k=el.dataset.k;const v=get(k);if(el.type==="checkbox")el.checked=!!v;else el.value=v??"";el.oninput=el.onchange=()=>{set(k,el.type==="checkbox"?el.checked:el.value);if(k==="no")noHint();if(k.startsWith("items")||k.startsWith("discount"))renderTotals();render()}})}
+function noHint(){const n=S.draft.no||"";$("#noHint").textContent=`見積書 EST-${n}／請求書 INV-${n}／領収書 REC-${n}`}
+function itemEditor(list,host,isM){host.innerHTML="";list.forEach((it,idx)=>{const d=document.createElement("div");d.className="item";const id=(isM?"m":"i")+idx;d.innerHTML=`<div class="head"><span>${isM?"月額":"明細"} ${idx+1}</span><span class="amt" id="${id}a"></span><button type="button" class="ghost" aria-label="この行を削除">削除</button></div>
+<label for="${id}n">項目</label><input id="${id}n" value="${esc(it.name)}">
+<label for="${id}d">内容（小さく表示）</label><input id="${id}d" value="${esc(it.desc)}">
+<div class="row3"><div><label for="${id}q">数量</label><input id="${id}q" inputmode="decimal" value="${esc(it.qty)}"></div><div><label for="${id}u">単位</label><input id="${id}u" value="${esc(it.unit)}"></div><div><label for="${id}p">単価（円）</label><input id="${id}p" inputmode="numeric" value="${esc(it.price)}"></div></div>`;
+const upd=()=>{it.name=d.querySelector(`#${id}n`).value;it.desc=d.querySelector(`#${id}d`).value;it.qty=d.querySelector(`#${id}q`).value;it.unit=d.querySelector(`#${id}u`).value;it.price=d.querySelector(`#${id}p`).value;d.querySelector(`#${id}a`).textContent=yen(num(it.qty)*num(it.price));queueSave("draft");renderTotals();render()};
+d.querySelectorAll("input").forEach(i=>i.oninput=upd);
+d.querySelector("button").onclick=()=>{list.splice(idx,1);if(!isM&&!list.length)list.push({name:"",desc:"",qty:1,unit:"式",price:0});itemEditor(list,host,isM);queueSave("draft");renderTotals();render()};
+host.appendChild(d);d.querySelector(`#${id}a`).textContent=yen(num(it.qty)*num(it.price))})}
+function renderTotals(){const c=calc(S.draft);$("#totals").innerHTML=`<div><span>小計</span><span>${yen(c.sub)}</span></div>${c.disc?`<div style="color:var(--danger)"><span>割引</span><span>-${yen(c.disc)}</span></div>`:""}<div class="grand"><span>合計（税込）</span><span>${yen(c.total)}</span></div><div style="font-size:12px;color:var(--mute)"><span>うち消費税（10%）</span><span>${yen(c.tax)}</span></div>`}
+function rowsHTML(list){return list.map(i=>`<tr><td><div class="nm">${esc(i.name)||"&nbsp;"}</div>${i.desc?`<div class="ds">${esc(i.desc)}</div>`:""}</td><td class="c">${esc(i.qty)}</td><td class="c">${esc(i.unit)}</td><td class="r">${yen(num(i.price))}</td><td class="r">${yen(num(i.qty)*num(i.price))}</td></tr>`).join("")}
+function docHTML(kind){const D=S.draft,I=S.issuer,c=calc(D);
+const T={est:{t:"御見積書",no:"EST-",date:D.dates.est,greet:"平素は格別のご高配を賜り、厚く御礼申し上げます。<br>ご依頼いただきました件につき、下記の通りお見積り申し上げます。",sumL:"お見積金額（税込）",rL:"有効期限",rV:jdate(D.dates.valid),subjL:"件名"},
+inv:{t:"ご請求書",no:"INV-",date:D.dates.inv,greet:"平素は格別のご高配を賜り、厚く御礼申し上げます。<br>下記の通りご請求申し上げます。期日までにお支払いをお願いいたします。",sumL:"ご請求金額（税込）",rL:"お支払期限",rV:jdate(D.dates.due),subjL:"件名"},
+rec:{t:"領収証",no:"REC-",date:D.dates.rec,greet:"下記金額を正に領収いたしました。",sumL:"領収金額（税込）",rL:"領収日（入金日）",rV:jdate(D.dates.rec),subjL:"但し書き"}}[kind];
+const titleSp=T.t.split("").join(" ");
+const issuer=`<div class="issuer"><div class="brand"><svg width="42" height="28" viewBox="0 0 120 80"><circle cx="44" cy="40" r="36" fill="#1F3A5F"/><circle cx="76" cy="40" r="36" fill="#E8A33D"/><path d="M60 7.75A36 36 0 0 1 60 72.25A36 36 0 0 1 60 7.75Z" fill="#C46A2B"/></svg><b>${esc(I.name)}</b></div>${I.rep?`代表：${esc(I.rep)}<br>`:""}${I.addr?esc(I.addr)+"<br>":""}${[I.tel&&"TEL: "+esc(I.tel),I.mail&&"Mail: "+esc(I.mail)].filter(Boolean).join(" / ")}${I.web?"<br>Web: "+esc(I.web):""}${I.reg&&kind!=="est"?"<br>登録番号："+esc(I.reg):""}</div>`;
+const stamp=kind==="rec"&&c.total>=50000?`<div class="stamp">収入印紙</div>`:"";
+let h=`<div class="doc"><div class="hd"><div><div class="title">${titleSp}</div><div class="client">${esc(D.client.name)||"&nbsp;"} ${esc(D.client.hon)}</div><div class="greet">${T.greet}</div></div><div><div class="meta">発行日：${jdate(T.date)}<br>${kind==="est"?"見積書番号":kind==="inv"?"請求書番号":"領収書番号"}：${T.no}${esc(D.no)}</div>${issuer}</div></div>
+<div class="subject">${T.subjL}：${esc(D.subject)}</div>
+<div class="sum"><div><div class="lbl">【${T.sumL}】</div><div class="big">${yen(c.total)} -</div></div>${stamp}<div class="right"><div class="lbl">【${T.rL}】</div><div class="val">${T.rV}</div></div></div>
+<div class="bar">■ ${kind==="rec"?"明細内容":"内訳"}</div><table><thead><tr><th>項目 / 内容</th><th>数量</th><th>単位</th><th>単価</th><th>金額(税込)</th></tr></thead><tbody>${rowsHTML(D.items)}
+${c.disc?`<tr class="sub"><td colspan="4">【小計】</td><td class="r">${yen(c.sub)}</td></tr><tr class="disc"><td colspan="4">【${esc(D.discount.label)||"割引"}】</td><td class="r">-${yen(c.disc)}</td></tr>`:""}
+<tr class="grand"><td colspan="4">【合計（税込）】</td><td class="r">${yen(c.total)}</td></tr><tr class="tax"><td colspan="4">うち消費税（10%対象 ${yen(c.total)}）</td><td class="r">${yen(c.tax)}</td></tr></tbody></table>`;
+if(kind==="est"&&D.monthly.on&&D.monthly.items.length){h+=`<div class="bar gray">■ 月額費用（運用・保守サポート）※任意・納品翌月より</div><table><thead><tr><th>項目 / 内容</th><th>数量</th><th>単位</th><th>単価</th><th>金額(税込)</th></tr></thead><tbody>${rowsHTML(D.monthly.items)}<tr class="grand"><td colspan="4">【月額費用 合計（税込）】</td><td class="r">${yen(c.mtotal)} / 月</td></tr></tbody></table>`}
+const bank=esc(I.bank)||"（振込先が未入力です）";
+const left=kind==="rec"?`<h4>【受領情報】</h4><div class="pre">お支払方法：${esc(D.pay)}\n領収日：${jdate(D.dates.rec)}</div>`:kind==="inv"?`<h4>【お振込先】</h4><div class="pre">${bank}</div>`:`<h4>【お支払い条件・お振込先】</h4><div class="pre">お支払い：納品・動作確認後、ご請求書記載の期日まで\n${bank}</div>`;
+const note=esc(kind==="est"?D.notes.est:kind==="inv"?D.notes.inv:D.notes.rec);
+h+=`<div class="boxes"><div class="box">${left}</div><div class="box"><h4>【備考・特記事項】</h4><div class="pre">${note||"―"}</div></div></div></div>`;return h}
+function render(){$("#scaler").innerHTML=docHTML(current);fit()}
+function fit(){const st=$("#stage"),sc=$("#scaler");const w=st.clientWidth-24;const k=Math.min(1,w/794);sc.style.transform=`scale(${k})`;sc.style.width="794px";st.style.height=(1123*k+24)+"px"}
+window.addEventListener("resize",fit);
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{current=b.dataset.doc;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));render()});
+$("#addItem").onclick=()=>{S.draft.items.push({name:"",desc:"",qty:1,unit:"式",price:0});itemEditor(S.draft.items,$("#items"),false);queueSave("draft");render()};
+$("#addM").onclick=()=>{S.draft.monthly.items.push({name:"",desc:"",qty:1,unit:"月",price:0});itemEditor(S.draft.monthly.items,$("#mItems"),true);queueSave("draft");render()};
+PRESETS.forEach((p,i)=>{const o=document.createElement("option");o.value=i;o.textContent=p[0];$("#preset").appendChild(o)});
+$("#preset").onchange=e=>{const p=PRESETS[e.target.value];if(!p)return;const L=S.draft.items;const blank=L.length===1&&!L[0].name&&!num(L[0].price);const it={name:p[0],desc:p[1],qty:1,unit:"式",price:p[2]};if(blank)L[0]=it;else L.push(it);e.target.value="";itemEditor(L,$("#items"),false);renderTotals();queueSave("draft");render()};
+function refreshAll(){bindFields();noHint();itemEditor(S.draft.items,$("#items"),false);itemEditor(S.draft.monthly.items,$("#mItems"),true);renderTotals();renderHist();render()}
+const say=(t,err)=>{const m=$("#msg");m.textContent=t;m.className="msg"+(err?" err":"")};
+/* ===== storage: db (preferred) or localStorage ===== */
+let db=null,uid=null,timers={};
+async function initStore(){try{if(window.claude&&claude.use){db=await claude.use("db");const user=await claude.use("user");uid=user?await user.id():null;if(!uid)db=null}}catch(e){db=null}
+try{if(db){const p=await db.doc(`data/users/${uid}/profile`).get();if(p.exists){const v=p.data();if(v.issuer)S.issuer={...defaultIssuer(),...v.issuer}}const d=await db.doc(`data/users/${uid}/draft`).get();if(d.exists&&d.data().draft)S.draft=mergeDraft(d.data().draft);const hs=await db.doc(`data/users/${uid}/profile`).collection("history").orderBy("savedAt","desc").limit(30).get();S.history=hs.docs.map(x=>x.data())}else{const v=JSON.parse(localStorage.getItem("tomoDocs")||"null");if(v){if(v.issuer)S.issuer={...defaultIssuer(),...v.issuer};if(v.draft)S.draft=mergeDraft(v.draft);S.history=v.history||[]}}}catch(e){say("保存データの読み込みに失敗しました。入力内容はこの画面で使えます。",true)}
+refreshAll()}
+function mergeDraft(d){const f=freshDraft("");return{...f,...d,client:{...f.client,...d.client},discount:{...f.discount,...d.discount},monthly:{...f.monthly,...d.monthly},dates:{...f.dates,...d.dates},notes:{...f.notes,...d.notes},items:Array.isArray(d.items)&&d.items.length?d.items:f.items}}
+function queueSave(which){clearTimeout(timers[which]);timers[which]=setTimeout(()=>persist(which),1200)}
+async function persist(which){try{if(db){if(which==="issuer")await db.doc(`data/users/${uid}/profile`).set({issuer:S.issuer});if(which==="draft")await db.doc(`data/users/${uid}/draft`).set({draft:S.draft})}else{localStorage.setItem("tomoDocs",JSON.stringify(S))}}catch(e){}}
+async function saveHistory(){const c=calc(S.draft);const rec={id:S.draft.no||String(Date.now()),client:S.draft.client.name,subject:S.draft.subject,total:c.total,savedAt:new Date().toISOString(),draft:JSON.parse(JSON.stringify(S.draft))};S.history=[rec,...S.history.filter(h=>h.id!==rec.id)].slice(0,30);
+try{if(db)await db.doc(`data/users/${uid}/profile`).collection("history").doc(rec.id.replace(/[^\w-]/g,"_")).set(rec);else localStorage.setItem("tomoDocs",JSON.stringify(S))}catch(e){say("保存に失敗しました。時間をおいてもう一度お試しください。",true);return false}renderHist();return true}
+function renderHist(){const h=$("#hist");if(!S.history.length){h.innerHTML='<p class="hint">まだ保存した書類はありません。</p>';return}h.innerHTML="";S.history.forEach(r=>{const b=document.createElement("button");b.type="button";b.innerHTML=`<span>${esc(r.client)||"（お客様名なし）"}<br><small>No.${esc(r.id)}　${esc(r.subject)}</small></span><span>${yen(r.total)}</span>`;b.onclick=()=>{S.draft=mergeDraft(r.draft);queueSave("draft");refreshAll();say(`No.${r.id} を読み込みました。`);window.scrollTo({top:0,behavior:"smooth"})};h.appendChild(b)})}
+$("#saveBtn").onclick=async()=>{if(await saveHistory())say("保存しました。「保存した書類」からいつでも呼び出せます。")};
+$("#newBtn").onclick=()=>{if(!confirm("入力中の内容を消して新しい書類を作りますか？（保存した書類は残ります）"))return;S.draft=freshDraft(S.draft.no);queueSave("draft");refreshAll();say("新しい書類を作成しました。番号は自動で次の番号になっています。")};
+/* ===== PDF ===== */
+let downloads=null;
+async function makePdf(kinds){const {jsPDF}=window.jspdf||{};if(!jsPDF||!window.html2canvas)throw new Error("lib");await document.fonts.ready;const pdf=new jsPDF({unit:"mm",format:"a4",orientation:"portrait"});const off=$("#off");
+for(let i=0;i<kinds.length;i++){off.innerHTML=docHTML(kinds[i]);const cv=await html2canvas(off.firstElementChild,{scale:2,backgroundColor:"#ffffff",useCORS:true});if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,210,297)}off.innerHTML="";return pdf.output("blob")}
+async function exportPdf(kinds){if(!downloads){say("この表示ではPDFを保存できません。claude.ai のアプリかブラウザで開き直してください。",true);return}
+const btns=[$("#pdfOne"),$("#pdfAll")];btns.forEach(b=>b.disabled=true);say("PDFを作成しています…");
+try{const blob=await makePdf(kinds);const nm=S.draft.client.name?`_${S.draft.client.name}`:"";const label={est:"見積書",inv:"請求書",rec:"領収書"};const fn=kinds.length>1?`見積書・請求書・領収書${nm}_${S.draft.no}.pdf`:`${label[kinds[0]]}${nm}_${{est:"EST-",inv:"INV-",rec:"REC-"}[kinds[0]]}${S.draft.no}.pdf`;
+await downloads.save({filename:fn.replace(/[\\/:*?"<>|]/g,""),data:blob});await saveHistory();say("PDFを保存しました。内容も「保存した書類」に記録しています。")}
+catch(e){const code=e&&e.code;if(code==="declined")say("保存をキャンセルしました。");else if(code==="rate_limited")say("少し待ってからもう一度お試しください。",true);else if(e&&e.message==="lib")say("PDF作成の準備ができていません。通信状況を確認して再読み込みしてください。",true);else say("PDFの保存に失敗しました。もう一度お試しください。",true)}
+finally{btns.forEach(b=>b.disabled=false)}}
+$("#pdfOne").onclick=()=>exportPdf([current]);
+$("#pdfAll").onclick=()=>exportPdf(["est","inv","rec"]);
+refreshAll();
+(async()=>{try{if(window.claude&&claude.use){downloads=await claude.use("downloads")}}catch(e){downloads=null}if(!downloads){$("#pdfOne").disabled=true;$("#pdfAll").disabled=true;say("この表示ではPDF保存が使えません。プレビューと入力はできます。")}})();
+initStore();
+})();
+</script>
+</body>
+</html>
